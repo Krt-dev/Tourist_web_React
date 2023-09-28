@@ -1,128 +1,44 @@
-// import React, { useState, useEffect } from 'react'
-// import Tour from './tour'
 
-// const url = 'https://course-api.com/react-tours-project'
-
-// function App() {
-//   const [loading, setLoading] = useState(true)
-//   const [tours, setTours] = useState([])
-
-//   const removeTour = (id) => {
-//     const newTours = tours.filter((tour) => tour.id !== id)
-//     setTours(newTours)
-//   }
-
-//   const Loading = () => {
-//     return (
-//       <div className="loading">
-//         <h1>loading...</h1>
-//       </div>
-//     );
-//   };
-
-//   const fetchTours = async () => {
-//     setLoading(true)
-//     try {
-//       const response = await fetch(url)
-//       const tours = await response.json()
-//       setLoading(false)
-//       setTours(tours)
-//     } catch (error) {
-//       setLoading(false)
-//       console.log(error)
-//     }
-//   }
-//   useEffect(() => {
-//     fetchTours()
-//   }, [])
-//   if (loading) {
-//     return (
-//       <main>
-//         <Loading />
-//       </main>
-//     )
-//   }
-//   if (tours.length === 0) {
-//     return (
-//       <main>
-//         <div className='title'>
-//           <h2>no tours left</h2>
-//           <button className='btn' onClick={() => fetchTours()}>
-//             refresh
-//           </button>
-//         </div>
-//       </main>
-//     )
-//   }
-
-  
-//   return (
-//     <main>
-//       <Tour tours={tours} removeTour={removeTour} />
-//     </main>
-//   )
-// }
-
-// export default App
-
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from './Loading';
-import Tour from './tour';
+import Tours from './components/Tours';
+import './index';
 
-const url = 'https://course-api.com/react-tours-project';
+const url = 'https://course-api.com/react-tours-project'
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [tours, setTours] = useState<Tour[]>([]);
-
-  const removeTour = (id: number) => {
-    const newTours = tours.filter((tour) => tour.id !== id);
-    setTours(newTours);
-  };
-
+  const [tours, setTours] = useState<Tours[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const fetchTours = async () => {
-    setLoading(true);
-    try {
+    setIsLoading(true);
+    try{
       const response = await fetch(url);
-      const fetchedTours: Tour[] = await response.json();
-      setLoading(false);
-      setTours(fetchedTours);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+      const toursData = await response.json();
+      setIsLoading(false);
+      setTours(toursData);
+    } catch(error){
+      setIsLoading(false);
+      console.error(error);
     }
-  };
-
+  }
+  
   useEffect(() => {
     fetchTours();
   }, []);
 
-  if (loading) {
-    return (
+  if(isLoading) {
+    return(
       <main>
-        <Loading />
+       <Loading /> 
       </main>
-    );
+    )
   }
 
-  if (tours.length === 0) {
-    return (
-      <main>
-        <div className='title'>
-          <h2>no tours left</h2>
-          <button className='btn' onClick={() => fetchTours()}>
-            refresh
-          </button>
-        </div>
-      </main>
-    );
-  }
-
-  return (
-    <main>
-      <tours tours={tours} removeTour={removeTour} />
-    </main>
-  );
+ return(
+ <main>
+  <Tours tours = {tours}/>
+ </main>
+ );
 }
 
 export default App;
