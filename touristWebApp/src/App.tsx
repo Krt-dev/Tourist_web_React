@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Loading from './Loading';
 import Tours from './components/Tours';
-import './index';
 import { Tour } from './types';
 
 const url = 'https://course-api.com/react-tours-project'
