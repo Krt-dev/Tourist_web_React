@@ -8,7 +8,7 @@ type TourProps = {
     // info: string;
     // name: string;
     // price: number;
-    // removeTour: (id: number) => void;
+    //removeTour: (id: number) => void;
 };
 
 
