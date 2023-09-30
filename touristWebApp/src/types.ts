@@ -4,4 +4,4 @@ export type Tour = {
     image: string;
     info: string;
     price: string;
-}
+};

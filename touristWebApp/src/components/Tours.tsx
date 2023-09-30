@@ -1,11 +1,12 @@
 
-import TourType from './TourN';
+import { Tour as TourType } from "../types";
+import Tour from './TourN';
 
 type ToursProps = {
     tours: TourType[];
 }
 
-export default function Tours(){
+export default function Tours({ tours }: ToursProps){
     return (
       <section>
         <div className="title">
@@ -13,8 +14,8 @@ export default function Tours(){
           <div className="underline"></div>
         </div>
         <div>
-          {tour.map((tour) => {
-            return <Tour key={tour.id} {...tour} removeTour={removeTour} />;
+          {tours.map((tour) => {
+            return <Tour key={tour.id} tour = {tour}/>;
           })}
         </div>
       </section>
